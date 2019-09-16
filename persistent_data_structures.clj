@@ -1,4 +1,5 @@
-(ns persistent-data-structures)
+(ns persistent-data-structures
+  (:require [clojure.test :as test]))
 
 (defn- replace-array [f arr]
   (dotimes [i (alength arr)]
@@ -17,12 +18,18 @@
   (replace-node f (.root xs))
   (replace-array f (.tail xs)))
 
-(defn squares [xs]
-  (mutate-vector (fn [_] (rand)) xs))
+(defn call [xs]
+  (mutate-vector (constantly :boom) xs))
 
-(defn -main [& args]
-  (let [xs (vec (range 100))
-        ys (squares xs)]
-    (println xs)))
+(test/deftest test-immutability
+  (test/testing "the awesomeness of immutability"
+    (let [xs [0 1 2 3 4 5 6 7 8 9]
+          ys (map (fn [x] (* x x)) xs)]
+      (test/is (= (range 10) xs))))
 
-(-main)
+  (test/testing "the pleasing nature of... wait what??"
+    (let [xs [0 1 2 3 4 5 6 7 8 9]]
+      (call xs)
+      (test/is (= (repeat 10 :boom) xs)))))
+
+(test/run-tests *ns*)
