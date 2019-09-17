@@ -1,13 +1,25 @@
-import Debug.Trace
+import System.IO.Unsafe (unsafePerformIO)
 
 count :: String -> Int
-count = length
+count text =
+  unsafePerformIO $ do
+    print "OHH NOOOOOO"
+    return $ length text
 
-count' :: String -> Int
-count' text =
-  trace ("OHHHH NOOOOOO: " ++ show text) (length text)
+data StringData = StringData {
+  text :: String,
+  reversed :: String,
+  size :: Int
+} deriving (Show)
+
+stats :: String -> StringData
+stats text = StringData {
+  text = text,
+  reversed = reverse text,
+  size = count text
+}
 
 main :: IO ()
-main = do
-  print $ count "Hello, World!"
-  print $ count' "Hello, World!"
+main = print (size (stats "Hello, World!"))
+
+-- stack runghc ./TypeSystem.hs
