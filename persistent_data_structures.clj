@@ -33,3 +33,5 @@
       (test/is (= (repeat 10 :boom) xs)))))
 
 (test/run-tests *ns*)
+
+;; clj persistent-data-structures.clj

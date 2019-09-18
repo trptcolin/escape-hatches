@@ -89,3 +89,5 @@ if $0 == __FILE__
   setup_database
   require "minitest/autorun"
 end
+
+# $ ruby ./private.rb
