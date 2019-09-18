@@ -18,7 +18,7 @@
   (replace-node f (.root xs))
   (replace-array f (.tail xs)))
 
-(defn call [xs]
+(defn do-something [xs]
   (mutate-vector (constantly :boom) xs))
 
 (test/deftest test-immutability
@@ -29,7 +29,7 @@
 
   (test/testing "the pleasing nature of... wait what??"
     (let [xs [0 1 2 3 4 5 6 7 8 9]]
-      (call xs)
+      (do-something xs)
       (test/is (= (repeat 10 :boom) xs)))))
 
 (test/run-tests *ns*)
